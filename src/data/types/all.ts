@@ -1,6 +1,6 @@
 export interface Transaction {
   date: number
-  amount: string
+  amount: number
   transaction_type: 'deposit' | 'withdraw'
   currency: string
   industry: string
