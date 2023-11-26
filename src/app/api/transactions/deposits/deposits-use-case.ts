@@ -10,7 +10,9 @@ export function getDepositsUseCase(filters: TransactionsFilters) {
   const filteredTransactions = filterTransactions(transactions, filters)
 
   const deposits = filteredTransactions.filter(
-    (transaction: Transaction) => transaction.transaction_type === 'deposit',
+    (transaction: Transaction) =>
+      transaction.transaction_type === 'deposit' &&
+      transaction.status === 'pay',
   )
 
   return deposits

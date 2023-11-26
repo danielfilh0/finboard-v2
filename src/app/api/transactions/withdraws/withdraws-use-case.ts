@@ -10,7 +10,9 @@ export function getWithdrawsUseCase(filters: TransactionsFilters) {
   const filteredTransactions = filterTransactions(transactions, filters)
 
   const withdraws = filteredTransactions.filter(
-    (transaction: Transaction) => transaction.transaction_type === 'withdraw',
+    (transaction: Transaction) =>
+      transaction.transaction_type === 'withdraw' &&
+      transaction.status === 'pay',
   )
 
   return withdraws
