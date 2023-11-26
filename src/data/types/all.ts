@@ -21,4 +21,5 @@ export interface TransactionsFilters {
   status?: 'pending' | 'pay' | null
   page?: number | null
   limit?: number | null
+  orderByAmount?: 'asc' | 'desc' | null
 }

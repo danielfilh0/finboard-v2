@@ -25,6 +25,11 @@ export function validateAndReturnSearchParams(searchParams: URLSearchParams) {
     .optional()
     .safeParse(searchParams.get('limit'))
 
+  const orderByAmount = z
+    .enum(['asc', 'desc'])
+    .nullish()
+    .safeParse(searchParams.get('order-by-amount'))
+
   if (!from.success) throw new Error('Data de início inválida.')
   if (!until.success) throw new Error('Data de fim inválida.')
 
@@ -36,6 +41,9 @@ export function validateAndReturnSearchParams(searchParams: URLSearchParams) {
   if (!page.success) throw new Error('Dado para paginação está inválido.')
   if (!limit.success) throw new Error('Dado para paginação está inválido.')
 
+  if (!orderByAmount.success)
+    throw new Error('Dado para ordenação está incorreto.')
+
   return {
     from: from.data,
     until: until.data,
@@ -45,5 +53,6 @@ export function validateAndReturnSearchParams(searchParams: URLSearchParams) {
     status: status.data,
     page: page.data ? page.data : 1,
     limit: limit.data ? limit.data : -1,
+    orderByAmount: orderByAmount.data,
   }
 }

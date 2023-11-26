@@ -18,20 +18,10 @@ export function filterTransactions(
     status,
     limit,
     page,
+    orderByAmount,
   }: TransactionsFilters,
 ) {
-  const orderedByDate = sortByOrder({
-    arr: transactions,
-    attr: 'date',
-    type: 'asc',
-  })
-
-  const filteredByDate = orderedByDate.filter(
-    ({ date }: Transaction) =>
-      new Date(date) > new Date(from) && new Date(date) < new Date(until),
-  )
-
-  const formatted = filteredByDate.map(
+  const formatted = transactions.map(
     ({ amount, date, ...transaction }: Transaction) => ({
       amount: formatAmount(amount),
       date: new Date(date),
@@ -40,7 +30,24 @@ export function filterTransactions(
     }),
   )
 
-  const filtered = filterByString(formatted, {
+  const ordered = orderByAmount
+    ? sortByOrder({
+        arr: formatted,
+        attr: 'amount',
+        type: orderByAmount,
+      })
+    : sortByOrder({
+        arr: formatted,
+        attr: 'date',
+        type: 'asc',
+      })
+
+  const filteredByDate = ordered.filter(
+    ({ date }: Transaction) =>
+      new Date(date) > new Date(from) && new Date(date) < new Date(until),
+  )
+
+  const filtered = filterByString(filteredByDate, {
     account,
     industry,
     state,
