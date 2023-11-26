@@ -8,6 +8,10 @@ export interface Transaction {
   account: string
 }
 
+export interface TransactionWithStatus extends Transaction {
+  status: 'pending' | 'pay'
+}
+
 export interface TransactionsFilters {
   from: string
   until: string
