@@ -43,8 +43,8 @@ export function LineChart({ labels, data }: BarChartProps) {
       {
         label: 'Dataset 1',
         data,
-        borderColor: 'rgb(255, 99, 132)',
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        borderColor: 'black',
+        backgroundColor: 'black',
       },
     ],
   }

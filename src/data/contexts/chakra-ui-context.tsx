@@ -9,7 +9,7 @@ export function ChakraUIProvider({ children }: { children: ReactNode }) {
     <CacheProvider>
       <ChakraProvider>
         <ColorModeScript initialColorMode={theme.config.initialColorMode} />
-        <Box bg="#09090B" color="white" minW="100vw" minH="100vh">
+        <Box minW="100vw" minH="100vh">
           {children}
         </Box>
       </ChakraProvider>

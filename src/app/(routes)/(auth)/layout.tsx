@@ -6,7 +6,7 @@ import { Logo } from '@/app/_components/logo'
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
     <Flex as="main" p="3" h="100vh" justifyContent="center" alignItems="center">
-      <Card>
+      <Card borderWidth={1} borderColor="gray.400" variant="elevated">
         <CardHeader>
           <Flex justifyContent="center">
             <Logo />

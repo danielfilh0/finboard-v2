@@ -34,9 +34,13 @@ export function Header() {
   return (
     <Box as="header" w="100%" p="4" bg="white" color="black">
       <Flex justifyContent="space-between" alignItems="center">
-        <Heading size="lg">Dashboard Financeiro</Heading>
+        <Heading size={['md', null, null, 'lg']} pl={[12, null, null, 0]}>
+          Dashboard Financeiro
+        </Heading>
 
-        <Button onClick={onOpenModal}>Filtros</Button>
+        <Button onClick={onOpenModal} colorScheme="blue">
+          Filtros
+        </Button>
 
         <Modal isOpen={isOpenModal} onClose={onCloseModal}>
           <ModalOverlay />
