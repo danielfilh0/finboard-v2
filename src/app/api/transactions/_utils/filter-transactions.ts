@@ -39,7 +39,7 @@ export function filterTransactions(
     : sortByOrder({
         arr: formatted,
         attr: 'date',
-        type: 'asc',
+        type: 'desc',
       })
 
   const filteredByDate = ordered.filter(

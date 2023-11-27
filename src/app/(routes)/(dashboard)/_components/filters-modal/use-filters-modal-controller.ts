@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useFilters } from '@/data/hooks/use-filters'
 import { parseObjToQueryParams } from '@/data/utils/parse-obj-to-query-params'
 
 const schema = z.object({
@@ -23,12 +24,13 @@ const schema = z.object({
 
 type FormData = z.infer<typeof schema>
 
-export function useHeaderController() {
+export function useFiltersModalController(navigateToSearchPage: boolean) {
   const {
     isOpen: isOpenModal,
     onOpen: onOpenModal,
     onClose: onCloseModal,
   } = useDisclosure()
+  const { setFilters } = useFilters()
   const router = useRouter()
 
   const {
@@ -44,7 +46,9 @@ export function useHeaderController() {
   })
 
   const handleSubmit = hookFormSubmit(async (data) => {
-    router.push(`/search?${parseObjToQueryParams(data)}`)
+    if (navigateToSearchPage)
+      router.push(`/search?${parseObjToQueryParams(data)}`)
+    setFilters(data)
     onCloseModal()
   })
 

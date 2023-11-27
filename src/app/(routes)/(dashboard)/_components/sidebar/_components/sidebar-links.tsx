@@ -1,7 +1,7 @@
 'use client'
 
 import { Box, Flex, HStack, Text } from '@chakra-ui/react'
-import { House, SignOut } from '@phosphor-icons/react'
+import { GridNine, House, SignOut } from '@phosphor-icons/react'
 import Link from 'next/link'
 
 export function SidebarLinks() {
@@ -12,6 +12,13 @@ export function SidebarLinks() {
           <HStack p="4" w="100%">
             <House size={32} />
             <Text>Início</Text>
+          </HStack>
+        </Link>
+
+        <Link href="/report">
+          <HStack p="4" w="100%">
+            <GridNine size={32} />
+            <Text>Relatórios</Text>
           </HStack>
         </Link>
       </Box>

@@ -10,13 +10,13 @@ import {
   Flex,
   Link,
   Text,
-  useDisclosure
+  useDisclosure,
 } from '@chakra-ui/react'
 import { List } from '@phosphor-icons/react'
 import React from 'react'
 
 import { Logo } from '@/app/_components/logo'
-import { useBreakpoint } from '@/data/hooks/useBreakpoint'
+import { useBreakpoint } from '@/data/hooks/use-breakpoint'
 
 import { SidebarLinks } from './_components/sidebar-links'
 

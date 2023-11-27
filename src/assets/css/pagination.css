@@ -1,0 +1,25 @@
+.pagination {
+  width: 100%;
+  overflow-x: auto;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  list-style: none;
+}
+
+.pagination li {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination li a {
+  font-weight: bold;
+  padding: 1rem;
+  border: 2px solid transparent;
+}
+
+.pagination li a:hover, .pagination li.selected a {
+  border-color: var(--chakra-colors-blue-500);
+}
+

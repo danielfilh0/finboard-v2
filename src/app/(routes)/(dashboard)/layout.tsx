@@ -3,21 +3,22 @@
 import { Box, Flex } from '@chakra-ui/react'
 import { ReactNode } from 'react'
 
-import { Header } from './_components/header'
+import { FiltersProvider } from '@/data/contexts/filters-context'
+
 import { Sidebar } from './_components/sidebar'
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <Flex maxHeight="100vh">
-      <Sidebar />
+    <FiltersProvider>
+      <Flex maxHeight="100vh">
+        <Sidebar />
 
-      <Box flex="1" flexDirection="column" overflowY="auto">
-        <Header />
-
-        <Box as="div" flex="1">
-          {children}
-        </Box>
-      </Box>
-    </Flex>
+        <Flex flex="1" flexDirection="column" overflowY="auto">
+          <Box as="div" flex="1" h="100%">
+            {children}
+          </Box>
+        </Flex>
+      </Flex>
+    </FiltersProvider>
   )
 }
