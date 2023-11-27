@@ -6,9 +6,12 @@ import { ChakraUIProvider } from '@/data/contexts/chakra-ui-context'
 import { AuthGuard } from './_components/AuthGuard'
 
 export const metadata: Metadata = {
-  title: 'Finboard - Dashboard Financeiro',
+  title: {
+    template: '%s | Finboard',
+    default: 'Finboard',
+  },
   description:
-    'Visualize os seus saldos, receitas, despesas, transações pendentes e históricos de transações',
+    'Visualize os seus saldos, receitas, despesas, transações pendentes e históricos de transações.',
 }
 
 export default function RootLayout({ children }: { children: ReactNode }) {

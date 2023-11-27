@@ -1,10 +1,17 @@
 import { Box, Flex, Heading } from '@chakra-ui/react'
+import { Metadata } from 'next'
 
 import { ReportTable } from '@/app/_components/report-table'
 import { transactionsService } from '@/data/services/transactions'
 import { initialFilters } from '@/data/utils/initial-filters'
 
 import { FiltersModal } from '../_components/filters-modal'
+
+export const metadata: Metadata = {
+  title: 'Relatório financeiro',
+  description:
+    'Visualize os seus saldos, receitas, despesas, transações pendentes e históricos de transações.',
+}
 
 export default async function Reports() {
   const [transactions, count] = await Promise.all([
