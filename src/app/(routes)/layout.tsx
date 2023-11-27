@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 
 import { ChakraUIProvider } from '@/data/contexts/chakra-ui-context'
 
+import { AuthGuard } from './_components/AuthGuard'
+
 export const metadata: Metadata = {
   title: 'Finboard - Dashboard Financeiro',
   description:
@@ -13,7 +15,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-BR">
       <body suppressHydrationWarning>
-        <ChakraUIProvider>{children}</ChakraUIProvider>
+        <AuthGuard>
+          <ChakraUIProvider>{children}</ChakraUIProvider>
+        </AuthGuard>
       </body>
     </html>
   )

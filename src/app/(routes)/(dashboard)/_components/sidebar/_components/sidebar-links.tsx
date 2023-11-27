@@ -1,10 +1,14 @@
 'use client'
 
-import { Box, Flex, HStack, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, HStack, Text } from '@chakra-ui/react'
 import { GridNine, House, SignOut } from '@phosphor-icons/react'
 import Link from 'next/link'
 
-export function SidebarLinks() {
+interface SidebarLinksProps {
+  onLogout: () => void
+}
+
+export function SidebarLinks({ onLogout }: SidebarLinksProps) {
   return (
     <Flex flexDirection="column" w="100%">
       <Box flex="1" px="4">
@@ -23,12 +27,17 @@ export function SidebarLinks() {
         </Link>
       </Box>
 
-      <Link href="/login">
+      <Button
+        onClick={onLogout}
+        variant="link"
+        color="white"
+        textDecoration="none"
+      >
         <HStack p="4" w="100%" mb="10">
           <SignOut size={32} />
           <Text>Sair</Text>
         </HStack>
-      </Link>
+      </Button>
     </Flex>
   )
 }

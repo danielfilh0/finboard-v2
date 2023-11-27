@@ -36,6 +36,7 @@
     "react/require-default-props": "off",
     "consistent-return": "off",
     "react/jsx-props-no-spreading": "off",
-    "default-param-last": "off"
+    "default-param-last": "off",
+    "no-unused-vars": ["error", { "varsIgnorePattern": "^_" }]
   }
 }

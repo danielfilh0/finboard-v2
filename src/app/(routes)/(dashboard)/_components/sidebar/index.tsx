@@ -19,8 +19,10 @@ import { Logo } from '@/app/_components/logo'
 import { useBreakpoint } from '@/data/hooks/use-breakpoint'
 
 import { SidebarLinks } from './_components/sidebar-links'
+import { useSidebarController } from './use-sidebar-controller'
 
 export function Sidebar() {
+  const { handleLogout } = useSidebarController()
   const { isDesktop } = useBreakpoint()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = React.useRef()
@@ -60,7 +62,7 @@ export function Sidebar() {
               </Box>
 
               <Flex as="div" flex="1" color="white">
-                <SidebarLinks />
+                <SidebarLinks onLogout={handleLogout} />
               </Flex>
 
               <Divider />
@@ -98,7 +100,7 @@ export function Sidebar() {
       </Box>
 
       <Flex as="div" flex="1" color="white">
-        <SidebarLinks />
+        <SidebarLinks onLogout={handleLogout} />
       </Flex>
 
       <Divider />
