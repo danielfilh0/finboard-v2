@@ -1,39 +1,40 @@
-import { useToast } from '@chakra-ui/react'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { FormEvent } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 
 import { localStorageKeys } from '@/data/config/local-storage-keys'
 import { useLocalStorage } from '@/data/hooks/use-local-storage'
+
+const schema = z.object({
+  email: z
+    .string()
+    .min(1, 'E-mail é obrigatório')
+    .email('Informe um e-mail válido'),
+  password: z
+    .string()
+    .min(1, 'Senha é obrigatória')
+    .min(8, 'Senha deve conter pelo menos 8 dígitos'),
+})
+
+type FormData = z.infer<typeof schema>
 
 export function useLoginFormController() {
   const router = useRouter()
   const [_, setUser] = useLocalStorage(localStorageKeys.user)
 
-  const toast = useToast()
+  const {
+    register,
+    handleSubmit: hookFormSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  })
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-
-    const formData = new FormData(event.currentTarget)
-    const data = Object.fromEntries(formData)
-
-    const { email, password } = data
-
-    if (!email || !password) {
-      toast({
-        title: 'Email ou senha não preenchidos.',
-        status: 'error',
-        position: 'top',
-        isClosable: true,
-      })
-
-      return
-    }
-
-    setUser(email)
-
+  const handleSubmit = hookFormSubmit(async (data) => {
+    setUser(data.email)
     router.push('/')
-  }
+  })
 
-  return { handleSubmit }
+  return { register, errors, handleSubmit }
 }
