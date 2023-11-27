@@ -25,7 +25,7 @@ export function Sidebar() {
   const { handleLogout } = useSidebarController()
   const { isDesktop } = useBreakpoint()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const btnRef = React.useRef()
+  const btnRef = React.useRef<any>(null)
 
   if (!isDesktop)
     return (

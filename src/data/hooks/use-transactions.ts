@@ -43,7 +43,7 @@ export async function useTransactions(filters: TransactionsFilters) {
       pendingsTotal,
       tenBiggestsDeposits,
     }
-  } catch (err: Any) {
+  } catch (err: any) {
     redirect('/login')
   }
 }

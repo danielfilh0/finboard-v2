@@ -8,9 +8,9 @@ export function paginate(arr: any, { page = 1, limit = -1 }: PaginationParams) {
 
   const pageCount = Math.ceil(arr.length / limit)
 
-  if (page > pageCount) return []
+  if ((page as number) > pageCount) return []
 
-  const start = (page - 1) * limit
+  const start = ((page as number) - 1) * limit
   const end = start + limit
 
   return arr.slice(start, end)
