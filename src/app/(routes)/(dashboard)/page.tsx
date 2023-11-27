@@ -2,10 +2,11 @@ import { Box, Flex, Heading, SimpleGrid } from '@chakra-ui/react'
 
 import { BarChart } from '@/app/_components/bar-chart'
 import { LineChart } from '@/app/_components/line-chart'
+import { useTransactions } from '@/data/hooks/use-transactions'
+import { initialFilters } from '@/data/utils/initial-filters'
 
 import { FiltersModal } from './_components/filters-modal'
 import { TransactionsValuesCard } from './_components/transactions-values-card'
-import { usePageController } from './use-page-controller'
 
 export default async function Home() {
   const {
@@ -17,7 +18,7 @@ export default async function Home() {
     depositsTotal,
     withdrawsTotal,
     pendingsTotal,
-  } = await usePageController()
+  } = await useTransactions(initialFilters)
 
   return (
     <>
@@ -41,11 +42,17 @@ export default async function Home() {
         />
       </SimpleGrid>
 
-      <Box>
+      <Box bg="gray.100" p={4} m={4}>
+        <Heading size="md" mb={4}>
+          10 maiores receitas
+        </Heading>
         <BarChart labels={barChartLabels} data={barChartData} />
       </Box>
 
-      <Box>
+      <Box bg="gray.100" p={4} m={4}>
+        <Heading size="md" mb={4}>
+          10 transações de empresas
+        </Heading>
         <LineChart labels={lineChartLabels} data={lineChartData} />
       </Box>
     </>

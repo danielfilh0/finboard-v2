@@ -1,8 +1,12 @@
-import { Flex, Heading, SimpleGrid, Text } from '@chakra-ui/react'
+import { Box, Flex, Heading, SimpleGrid } from '@chakra-ui/react'
 import { z } from 'zod'
 
-import { transactionsService } from '@/data/services/transactions'
-import { formatCurrency } from '@/data/utils/format-currency'
+import { BarChart } from '@/app/_components/bar-chart'
+import { LineChart } from '@/app/_components/line-chart'
+import { useTransactions } from '@/data/hooks/use-transactions'
+
+import { FiltersModal } from '../_components/filters-modal'
+import { TransactionsValuesCard } from '../_components/transactions-values-card'
 
 const schema = z.object({
   from: z.string().refine((from) => !!from.length, {
@@ -23,80 +27,48 @@ interface SearchProps {
 }
 
 export default async function Search({ searchParams }: SearchProps) {
-  const params = searchParams
+  const filters = searchParams
 
-  const promises = [
-    transactionsService.getDepositsTotal(params),
-    transactionsService.getWithdrawsTotal(params),
-    transactionsService.getPendingsTotal(params),
-  ]
-
-  const [depositsTotal, withdrawsTotal, pendingsTotal] =
-    await Promise.all(promises)
-  const balance = depositsTotal - withdrawsTotal
+  const {
+    balance,
+    barChartData,
+    barChartLabels,
+    lineChartData,
+    lineChartLabels,
+    depositsTotal,
+    withdrawsTotal,
+    pendingsTotal,
+  } = await useTransactions(filters)
 
   return (
-    <SimpleGrid columns={[1, 2, 3, 4]} spacing="4" p={4} overflowY="auto">
-      <Flex
-        bg="gray.900"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Heading as="h2" size="sm">
-          Receitas
-        </Heading>
+    <>
+      <Box as="header" w="100%" p="4" bg="white" color="black">
+        <Flex justifyContent="space-between" alignItems="center">
+          <Heading size={['md', null, null, 'lg']} pl={[12, null, null, 0]}>
+            Dashboard Financeiro
+          </Heading>
 
-        <Text fontSize="4xl" color="green.200">
-          {formatCurrency(depositsTotal)}
-        </Text>
-      </Flex>
+          <FiltersModal navigateToSearchPage />
+        </Flex>
+      </Box>
 
-      <Flex
-        bg="gray.900"
-        height="100px"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Heading as="h2" size="sm">
-          Despesas
-        </Heading>
+      <SimpleGrid columns={[1, 2, null, 4]} spacing="4" p={4} overflowY="auto">
+        <TransactionsValuesCard title="Receitas" value={depositsTotal} />
+        <TransactionsValuesCard title="Despesas" value={withdrawsTotal} />
+        <TransactionsValuesCard title="Saldos" value={balance} />
+        <TransactionsValuesCard
+          title="Transações pendentes"
+          value={pendingsTotal}
+        />
+      </SimpleGrid>
 
-        <Text fontSize="4xl" color="red.200">
-          {formatCurrency(withdrawsTotal)}
-        </Text>
-      </Flex>
+      <Box>
+        <BarChart labels={barChartLabels} data={barChartData} />
+      </Box>
 
-      <Flex
-        bg="gray.900"
-        height="100px"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Heading as="h2" size="sm">
-          Saldos
-        </Heading>
-
-        <Text fontSize="4xl" color={balance < 0 ? 'red.200' : 'green.200'}>
-          {formatCurrency(balance)}
-        </Text>
-      </Flex>
-
-      <Flex
-        bg="gray.900"
-        height="100px"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Heading as="h2" size="sm">
-          Transações pendentes
-        </Heading>
-
-        <Text fontSize="4xl">{formatCurrency(pendingsTotal)}</Text>
-      </Flex>
-    </SimpleGrid>
+      <Box>
+        <LineChart labels={lineChartLabels} data={lineChartData} />
+      </Box>
+    </>
   )
 }
